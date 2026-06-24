@@ -1,0 +1,8 @@
+{
+  "name": "音乐格式解锁工具",
+  "description": "一键解锁并转换 QQ音乐、网易云音乐、酷狗等平台的加密歌曲为 MP3 或 WAV 格式，纯本地解密，安全快捷。",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
