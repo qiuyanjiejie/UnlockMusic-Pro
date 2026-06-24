@@ -12,6 +12,8 @@ export async function decryptFile(file: File): Promise<DecryptionResult> {
     case 'qmcflac':
     case 'qmcogg':
     case 'tkm':
+    case 'mgg':
+    case 'mflac':
       return await decryptQmc(file);
     case 'kgm':
     case 'kgma':

@@ -10,6 +10,36 @@
   --color-zinc-400: #a1a1aa;
   --color-zinc-50: #fafafa;
   --color-blue-500: #3b82f6;
+  --color-cyan-400: #22d3ee;
+  --color-violet-500: #8b5cf6;
+  --color-fuchsia-500: #d946ef;
+}
+
+@keyframes flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-flow {
+  background-size: 200% 200%;
+  animation: flow 5s ease infinite;
+}
+
+.cyber-border {
+  position: relative;
+}
+
+.cyber-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, var(--color-blue-500), var(--color-fuchsia-500), var(--color-cyan-400));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.3;
 }
 
 body {

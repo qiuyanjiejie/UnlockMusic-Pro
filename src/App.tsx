@@ -81,38 +81,52 @@ export default function App() {
   const completedCount = files.filter(f => f.status === 'completed').length;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-blue-500/30 p-6 lg:p-12">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-fuchsia-500/30 p-4 lg:p-8 relative overflow-x-hidden">
+      {/* Dynamic Cyber Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 blur-[150px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-600/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <header className="flex justify-between items-center px-2">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <Music className="w-6 h-6 text-white" />
+        <header className="flex justify-between items-center px-4 py-4 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-xl">
+          <div className="flex items-center gap-4">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-fuchsia-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-flow"></div>
+              <div className="relative w-12 h-12 bg-zinc-950 rounded-xl flex items-center justify-center">
+                <Music className="w-7 h-7 text-white" />
+              </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-white leading-none">UnlockMusic Pro</h1>
-              <p className="text-xs text-zinc-400 mt-1 uppercase tracking-widest font-semibold">v1.0 • 本地解密</p>
+              <h1 className="text-2xl font-black tracking-tighter bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent leading-none">UNLOCKMUSIC</h1>
+              <p className="text-[10px] text-blue-400 font-bold uppercase tracking-[0.3em] mt-1">Advanced Decryption System</p>
             </div>
           </div>
-          <div className="hidden sm:flex items-center gap-4 text-xs font-medium text-zinc-500">
-            <span>隐私保护</span>
-            <span>无服务器处理</span>
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex flex-col items-end">
+              <span className="text-[10px] text-zinc-500 font-bold uppercase">System Status</span>
+              <span className="text-xs text-emerald-400 font-mono flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                ONLINE • LOCAL_ONLY
+              </span>
+            </div>
           </div>
         </header>
 
-        {/* Bento Grid Layout */}
-        <main className="grid grid-cols-12 gap-4 auto-rows-min">
+        {/* Bento Grid */}
+        <main className="grid grid-cols-12 gap-4">
           
           {/* Main Dropzone - Spans 8 cols */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
             className={`
-              col-span-12 lg:col-span-8 row-span-2 relative group cursor-pointer
-              border border-zinc-800 bg-zinc-900/50 rounded-[32px] p-12
-              transition-all duration-300 ease-out flex flex-col items-center justify-center
-              ${isDragging ? 'border-blue-500 bg-blue-500/5 ring-4 ring-blue-500/10' : 'hover:bg-zinc-900 hover:border-zinc-700'}
+              col-span-12 lg:col-span-8 relative group cursor-pointer
+              bg-zinc-900/40 border border-zinc-800 rounded-[40px] p-12 backdrop-blur-md
+              transition-all duration-500 cyber-border
+              ${isDragging ? 'bg-blue-500/5 scale-[1.01]' : 'hover:bg-zinc-900/60 hover:border-zinc-700/50'}
             `}
             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
             onDragLeave={() => setIsDragging(false)}
@@ -127,112 +141,97 @@ export default function App() {
               onChange={(e) => e.target.files && handleFiles(Array.from(e.target.files))}
               accept=".ncm,.qmc0,.qmc3,.qmcflac,.qmcogg,.tkm,.mflac,.mgg,.kgm,.vpr"
             />
-            <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Upload className={`w-10 h-10 ${isDragging ? 'text-blue-400' : 'text-zinc-400'}`} />
-            </div>
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-2">点击或拖拽音频文件到此处</h2>
-              <p className="text-zinc-500 max-w-md">支持 NCM, QMC, KGM, XM, BKM, FLAC_MOD 等主流加密格式</p>
+            <div className="flex flex-col items-center justify-center text-center">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-500/20 to-fuchsia-500/20 flex items-center justify-center mb-8 relative">
+                <div className="absolute inset-0 rounded-full border border-blue-500/30 animate-[spin_10s_linear_infinite]" />
+                <Upload className={`w-10 h-10 ${isDragging ? 'text-blue-400' : 'text-zinc-400'} group-hover:scale-125 transition-transform duration-500`} />
+              </div>
+              <h2 className="text-3xl font-black text-white mb-3 tracking-tight">上传加密音频</h2>
+              <p className="text-zinc-400 max-w-sm font-medium">支持所有主流平台加密格式，拖拽即刻解锁本地高清音质</p>
             </div>
           </motion.div>
 
-          {/* Output Info - Spans 4 cols */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="col-span-12 lg:col-span-4 bg-zinc-900 border border-zinc-800 rounded-[24px] p-6 flex flex-col justify-between"
-          >
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 block mb-6">输出格式</span>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 bg-zinc-800/50 border border-blue-500/30 rounded-xl">
-                  <span className="text-sm font-medium">MP3 (自动)</span>
-                  <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                </div>
-                <div className="flex items-center justify-between p-3 bg-zinc-800/20 border border-zinc-800 rounded-xl opacity-50">
-                  <span className="text-sm font-medium">WAV (原始)</span>
-                </div>
-              </div>
-            </div>
-            <div className="mt-8">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 block mb-4">自动优化</span>
-              <div className="bg-zinc-800/30 rounded-xl p-4 border border-zinc-800">
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  系统会自动根据解密后的流数据选择最佳容器格式，并尽可能保留原始元数据。
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Stats Card - Spans 4 cols */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="col-span-12 lg:col-span-4 bg-zinc-900 border border-zinc-800 rounded-[24px] p-6 flex flex-col justify-between"
-          >
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 block mb-4">转换统计</span>
-              <div className="space-y-1">
-                <div className="text-4xl font-bold text-white">{completedCount}</div>
-                <div className="text-xs text-zinc-500">已解锁歌曲</div>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-zinc-800">
+          {/* Stats & Actions Side Panel */}
+          <div className="col-span-12 lg:col-span-4 grid grid-cols-1 gap-4">
+            {/* Format Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-zinc-900/40 border border-zinc-800 rounded-[32px] p-6 backdrop-blur-md flex flex-col justify-between"
+            >
               <div>
-                <div className="text-lg font-bold text-white">{(totalSize / 1024 / 1024).toFixed(1)} <span className="text-[10px] text-zinc-500">MB</span></div>
-                <div className="text-[10px] text-zinc-500 uppercase font-semibold">总处理量</div>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-6 block">Output Profile</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-4 bg-blue-500/10 border border-blue-500/50 rounded-2xl group transition-all">
+                    <span className="text-sm font-bold text-blue-100">Smart Conversion</span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.8)]" />
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-zinc-800/30 border border-zinc-800/50 rounded-2xl opacity-40">
+                    <span className="text-sm font-bold">Lossless (WAV)</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="text-lg font-bold text-white">100%</div>
-                <div className="text-[10px] text-zinc-500 uppercase font-semibold">解密率</div>
+              <div className="mt-8">
+                <button 
+                  onClick={downloadAll}
+                  disabled={!files.some(f => f.status === 'completed')}
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-fuchsia-600 hover:from-blue-500 hover:to-fuchsia-500 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-blue-600/20 transition-all disabled:opacity-20 active:scale-95"
+                >
+                  批量下载已解锁
+                </button>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Queue Card - Spans 8 cols */}
+            {/* Stats Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-zinc-900/40 border border-zinc-800 rounded-[32px] p-6 backdrop-blur-md"
+            >
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-4 block">Analytics</span>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-zinc-800/20 border border-zinc-800/50 rounded-2xl">
+                  <div className="text-3xl font-black text-white">{completedCount}</div>
+                  <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">解锁成功</div>
+                </div>
+                <div className="p-4 bg-zinc-800/20 border border-zinc-800/50 rounded-2xl">
+                  <div className="text-xl font-black text-white">{(totalSize / 1024 / 1024).toFixed(1)}</div>
+                  <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">MB 处理量</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Queue List - Spans 12 cols */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="col-span-12 lg:col-span-8 min-h-[400px] bg-zinc-900 border border-zinc-800 rounded-[32px] p-8 flex flex-col"
+            transition={{ delay: 0.3 }}
+            className="col-span-12 bg-zinc-900/40 border border-zinc-800 rounded-[40px] p-8 backdrop-blur-md min-h-[400px]"
           >
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 block mb-1">转换队列</span>
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  文件列表
-                  <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400">
-                    {files.length}
-                  </span>
-                </h3>
+            <div className="flex items-center justify-between mb-10 px-2">
+              <div className="flex items-center gap-4">
+                <h3 className="text-2xl font-black text-white tracking-tighter">处理队列</h3>
+                <span className="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 font-mono text-xs border border-zinc-700">
+                  {files.length} ITEMS
+                </span>
               </div>
-              {files.length > 0 && (
-                <div className="flex gap-2">
-                  <button 
-                    onClick={downloadAll}
-                    disabled={!files.some(f => f.status === 'completed')}
-                    className="text-xs font-bold px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-30 disabled:grayscale transition-all text-white shadow-lg shadow-blue-600/20"
-                  >
-                    全部下载
-                  </button>
-                  <button 
-                    onClick={clearAll}
-                    className="text-xs font-bold px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors text-zinc-400"
-                  >
-                    清空
-                  </button>
-                </div>
-              )}
+              <button 
+                onClick={clearAll}
+                className="text-xs font-black uppercase tracking-widest text-zinc-500 hover:text-red-400 transition-colors"
+              >
+                Clear Queue
+              </button>
             </div>
 
-            <div className="flex-1 space-y-2 overflow-y-auto pr-2 max-h-[500px] custom-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               <AnimatePresence initial={false}>
                 {files.length === 0 ? (
-                  <div className="h-full flex flex-col items-center justify-center text-zinc-600 space-y-3 opacity-50">
-                    <Music className="w-12 h-12 stroke-1" />
-                    <p className="text-sm font-medium">队列目前为空</p>
+                  <div className="col-span-full h-64 flex flex-col items-center justify-center text-zinc-700 space-y-4 opacity-30">
+                    <Music className="w-16 h-16 stroke-[1px]" />
+                    <p className="text-lg font-bold tracking-widest uppercase">Awaiting Input...</p>
                   </div>
                 ) : (
                   files.map((file) => (
@@ -242,64 +241,55 @@ export default function App() {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      className="flex items-center gap-4 p-4 rounded-2xl bg-zinc-800/40 border border-zinc-800 hover:border-zinc-700 transition-all group"
+                      className="group relative p-5 rounded-3xl bg-zinc-800/30 border border-zinc-800/50 hover:border-zinc-600/50 transition-all duration-300"
                     >
-                      <div className="relative w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700 overflow-hidden flex items-center justify-center shrink-0">
-                        {file.metadata?.picture ? (
-                          <img src={file.metadata.picture} alt="" className="w-full h-full object-cover" />
-                        ) : (
-                          <Music className="w-5 h-5 text-zinc-600" />
-                        )}
-                        {file.status === 'processing' && (
-                          <div className="absolute inset-0 bg-zinc-950/80 flex items-center justify-center">
-                            <Loader2 className="w-5 h-5 text-blue-400 animate-spin" />
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-sm font-semibold text-zinc-100 truncate">
-                            {file.metadata?.title || file.name}
-                          </h4>
-                        </div>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          {file.status === 'completed' ? (
-                            <p className="text-[10px] text-zinc-500 font-medium truncate uppercase tracking-wider">
-                              {file.metadata?.artist || 'Unknown Artist'} • {file.name.split('.').pop()}
-                            </p>
+                      <div className="flex items-center gap-4">
+                        <div className="relative w-16 h-16 rounded-2xl bg-zinc-950 border border-zinc-800 overflow-hidden shrink-0 shadow-2xl">
+                          {file.metadata?.picture ? (
+                            <img src={file.metadata.picture} alt="" className="w-full h-full object-cover" />
                           ) : (
-                            <p className="text-[10px] text-zinc-500 font-medium tracking-wider">
-                              {(file.size / 1024 / 1024).toFixed(2)} MB
-                            </p>
+                            <Music className="w-6 h-6 text-zinc-700" />
+                          )}
+                          {file.status === 'processing' && (
+                            <div className="absolute inset-0 bg-blue-500/20 backdrop-blur-sm flex items-center justify-center">
+                              <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
+                            </div>
                           )}
                         </div>
-                      </div>
 
-                      <div className="flex items-center gap-3">
-                        {file.status === 'completed' && (
-                          <>
-                            <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">已完成</span>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-black text-white truncate leading-tight mb-1">
+                            {file.metadata?.title || file.name}
+                          </h4>
+                          <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider truncate">
+                            {file.status === 'completed' 
+                              ? `${file.metadata?.artist || 'Unknown'} • ${file.name.split('.').pop()}`
+                              : `${(file.size / 1024 / 1024).toFixed(2)} MB`}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                          {file.status === 'completed' && (
                             <button 
                               onClick={() => downloadFile(file)}
-                              className="p-2 rounded-lg bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors"
+                              className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-white transition-all shadow-lg shadow-blue-500/10"
                             >
                               <Download className="w-4 h-4" />
                             </button>
-                          </>
-                        )}
-                        {file.status === 'error' && (
-                          <div className="flex items-center gap-1.5 text-red-400 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg bg-red-400/10">
-                            <AlertCircle className="w-3 h-3" />
-                            <span>{file.errorMessage?.includes('under development') ? '开发中' : '失败'}</span>
-                          </div>
-                        )}
-                        <button 
-                          onClick={() => removeFile(file.id)}
-                          className="p-2 rounded-lg hover:bg-zinc-700 text-zinc-500 hover:text-red-400 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                          )}
+                          <button 
+                            onClick={() => removeFile(file.id)}
+                            className="p-2.5 rounded-xl bg-zinc-950/50 text-zinc-600 hover:text-red-400 transition-all"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Status Indicator */}
+                      <div className="absolute top-2 right-2">
+                        {file.status === 'completed' && <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />}
+                        {file.status === 'error' && <AlertCircle className="w-3 h-3 text-red-500" />}
                       </div>
                     </motion.div>
                   ))
@@ -309,12 +299,14 @@ export default function App() {
           </motion.div>
         </main>
 
-        <footer className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">
-          <p>© 2026 UNLOCKMUSIC PRO • 开源安全</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-zinc-400 transition-colors">隐私条款</a>
-            <a href="#" className="hover:text-zinc-400 transition-colors">格式支持</a>
-            <a href="#" className="hover:text-zinc-400 transition-colors">关于工具</a>
+        <footer className="py-10 border-t border-zinc-900/50 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-4">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-700 italic">UnlockMusic Core v1.0.4</span>
+          </div>
+          <div className="flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">
+            <a href="#" className="hover:text-blue-500 transition-colors">Documentation</a>
+            <a href="#" className="hover:text-blue-500 transition-colors">Privacy Shield</a>
+            <a href="#" className="hover:text-blue-500 transition-colors">Github Repo</a>
           </div>
         </footer>
       </div>
